@@ -124,7 +124,7 @@ console.log('cartlength',user,cart);
       </Item>
       <Item key="cart" icon={<ShoppingCartOutlined />}>
        <Link to="/cart">
-       <Badge count={cart.length} offset={[9,0]}>
+       <Badge count={cart?.length} offset={[9,0]}>
         Cart
         </Badge>
         </Link>
