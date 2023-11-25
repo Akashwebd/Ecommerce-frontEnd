@@ -7,5 +7,4 @@ export const createPaymentIntent= async (token,coupon) =>{
                         token:token
                     }
                 })
-
 }

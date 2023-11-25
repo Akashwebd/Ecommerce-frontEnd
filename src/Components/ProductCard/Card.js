@@ -42,20 +42,22 @@ function ProductCard({product,loading}){
         //   >
         <>
         {/* <Link onClick={() => console.log('hello')}> */}
-        <a onClick={handleAddtoCart}>
-        <ShoppingCartOutlined /><br/>
-        Add to Cart
-        </a>
+         {
+          product.quantity > 0 ? <a onClick={handleAddtoCart}>
+          <ShoppingCartOutlined /><br/>
+          Add to Cart
+          </a>:
+          <>
+          <ShoppingCartOutlined className="text-danger" disabled={true}/><br/>
+          Out Of Stock
+          </>
+         }
         </>,
-            // </Popconfirm>,
-            // <Link to={`/admin/product/${product.slug}`}>
-            <>
             <Link to={`/product/${product.slug}`}>
             <EyeOutlined />
             <br/>
             View Product
             </Link>
-            </>
             // 
         ]}
         className='m-2'

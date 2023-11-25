@@ -5,6 +5,10 @@ import { createPaymentIntent } from "../Functions/stripe";
 import {Link} from 'react-router-dom';
 import { Card } from "antd";
 import { DollarOutlined,CheckOutlined } from "@ant-design/icons";
+import { CreateOrder } from "../Functions/order";
+import { addToCart } from "../Store/Slices/CartSlice";
+import { handleCouponState } from "../Store/Slices/CouponSlice";
+import { deleteCart } from "../Functions/Cart";
 import Laptop from '../../Images/laptop.jpg';
 
 const cartStyle = {
@@ -68,6 +72,17 @@ if(payload.error){
     setError(null);
     setProcessing(false);
     setSucceeded(true);
+    CreateOrder({stripeResponse:payload},user.token).then(res =>{
+        if(res.data.ok){
+        window.localStorage.removeItem('cart');
+        dispatch(addToCart({cart:[]}));
+        dispatch(handleCouponState(false));
+        deleteCart(user.token);
+        }
+    }).catch(error =>{
+        console.log(error);
+    })
+
 }
 }
 

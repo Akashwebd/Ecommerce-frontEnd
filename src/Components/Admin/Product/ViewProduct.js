@@ -13,6 +13,7 @@ import {useHistory, Link } from "react-router-dom";
 import Laptop from '../../../Images/laptop.jpg';
 import { addToCart } from '../../Store/Slices/CartSlice';
 import {isEqual, uniqWith} from 'lodash';
+import { handleDrawer } from '../../Store/Slices/DrawerSlice';
 // import { captureRejectionSymbol } from "events";
 const { Meta } = CardElement;
 
@@ -45,7 +46,8 @@ const handleAddtoCart = () =>{
   const unique = uniqWith(cart,isEqual);
   console.log(unique);
   window.localStorage.setItem('cart',JSON.stringify(unique));
-  dispatch(addToCart({cart:JSON.stringify(unique)}));
+  dispatch(addToCart({cart:unique}));
+  dispatch(handleDrawer(true));
 }
 
 const getDetails = async(check) =>{
@@ -115,10 +117,18 @@ return(
         <CardElement
         // hoverable
         actions={[
-        <a onClick={handleAddtoCart}>
-        <ShoppingCartOutlined /><br/>
-        Add to Cart
-        </a>,
+          <>
+          {
+            productDetails.quantity > 0 ? <a onClick={handleAddtoCart}>
+            <ShoppingCartOutlined /><br/>
+            Add to Cart
+            </a>:
+            <>
+            <ShoppingCartOutlined className="text-danger" disabled={true}/><br/>
+            Out Of Stock
+            </>
+           }
+           </>,
             <>
             <HeartOutlined />
             <br/>
