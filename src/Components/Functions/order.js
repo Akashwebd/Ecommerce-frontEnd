@@ -8,3 +8,13 @@ export const CreateOrder = async (stripeResponse,token) =>{
                     }
                 })
 }
+
+export const getOrders = async (token) =>{
+
+    console.log(token,'checktoken');
+    return await axios.get(`${process.env.REACT_APP_API_END_POINT}/user/orders`,{
+                    headers:{
+                        token:token
+                    }
+                })
+}
