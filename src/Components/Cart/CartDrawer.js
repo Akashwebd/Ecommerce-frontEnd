@@ -41,14 +41,14 @@ return(
                 <>
                 <img src={item.images[0].url} style={style} className="text-center"/>
                 <p className="text-center bg-secondary text-light">
-                 {item.title}*{item.count}   
+                 {item.title} X {item.count}   
                 </p>
                 </>
                 ):(
                     <>
                 <img src={Laptop}/>
                 <p className="text-center bg-secondary text-light">
-                 {item.title}*{item.count}   
+                 {item.title} x {item.count}   
                 </p>
                 </>
                 )
