@@ -1,6 +1,6 @@
 import React from "react";
 
-function PaymentInfo({order}){
+function PaymentInfo({order,check=true}){
     const {paymentIntent} =order;
 return(
     <p>
@@ -15,7 +15,9 @@ return(
         <span><b>Ordered On:</b>{new Date(paymentIntent.created*1000).toLocaleString()}</span>{"/"}
         <br/>
         <br/>
-        <span className="bg bg-primary text-white p-1">Ordered Status: {order.orderStatus}</span>
+        {
+            check ?<span className="bg bg-primary text-white p-1">Ordered Status: {order.orderStatus}</span>:null
+        }
     </p>
 )
 

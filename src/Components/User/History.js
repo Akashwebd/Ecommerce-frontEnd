@@ -4,6 +4,8 @@ import { getOrders } from "../Functions/order";
 import { useSelector } from "react-redux";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import PaymentInfo from "./PaymentInfo";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import Invoice from "./Invoice";
 
 
 function History(){
@@ -53,6 +55,16 @@ function History(){
 
     }
 
+    const showDownLoadLink = (orderItem) =>(
+    <PDFDownloadLink
+    document={<Invoice order={orderItem}/>}
+    fileName="invoice.pdf"
+    className="btn btn-block btn-sm btn-outlined-primary"
+    >
+    Download Invoice
+    </PDFDownloadLink>
+    )
+
  const showOrders = () =>{
     return(
         order.map(item =>(
@@ -61,7 +73,7 @@ function History(){
             {showOrderTable(item?.products)}
             <div className="row">
                 <div className="col">
-                 PDf invoice
+                 {showDownLoadLink(item)}
                 </div>
             </div>
             </div>

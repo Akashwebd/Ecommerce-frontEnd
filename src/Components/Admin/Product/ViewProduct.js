@@ -3,7 +3,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import {Card as CardElement,Popconfirm,Skeleton } from 'antd';
 import Card from "../../ProductCard/Card";
-import { allProduct, getProduct,create_update_Rating,relatedProduct } from "../../Functions/Product";
+import { allProduct, getProduct,create_update_Rating,relatedProduct,createWishlist } from "../../Functions/Product";
 import ProductListItem from "./ProductListItem";
 import { ShoppingCartOutlined,HeartOutlined,StarOutlined} from '@ant-design/icons';
 import { useSelector,useDispatch } from "react-redux";
@@ -14,6 +14,8 @@ import Laptop from '../../../Images/laptop.jpg';
 import { addToCart } from '../../Store/Slices/CartSlice';
 import {isEqual, uniqWith} from 'lodash';
 import { handleDrawer } from '../../Store/Slices/DrawerSlice';
+import { toast } from "react-toastify";
+// import { useHistory } from "react-router-dom";
 // import { captureRejectionSymbol } from "events";
 const { Meta } = CardElement;
 
@@ -64,6 +66,16 @@ const getDetails = async(check) =>{
     console.log(error);
   }finally{
     setLoading(false);
+  }
+}
+
+const handleAddtoWishlist = async(id) =>{
+  const response = await createWishlist(id,user.token);
+  if(response.data.ok){
+    toast.success('Successfully Added to Wishlist',{
+      position:toast.POSITION.TOP_RIGHT
+    })
+    history.push('/user/wishlist');
   }
 }
 
@@ -129,11 +141,11 @@ return(
             </>
            }
            </>,
-            <>
+            <a onClick={() =>handleAddtoWishlist(productDetails._id)}>
             <HeartOutlined />
             <br/>
            Add to Wishlist
-           </>,
+           </a>,
            <>
            {user.token ? 
            (<div onClick={()=>setModal(true)}>
