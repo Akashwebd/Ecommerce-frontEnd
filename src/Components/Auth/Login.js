@@ -18,7 +18,7 @@ function Login({history}){
     const [loading,setLoading] = useState(false);
 
     const dispatch = useDispatch();
-    const {user} = useSelector(state => ({...state}));
+    const {user} = useSelector(state => state.user);
 
     // useEffect(()=>{
     // setEmail(window.localStorage.getItem('emailForRegistration'));   
@@ -46,6 +46,7 @@ function Login({history}){
     }
 
     const handleSubmit =async (e) =>{
+        e.preventDefault();
         try{
             // e.preventDefault();
             setLoading(true);
