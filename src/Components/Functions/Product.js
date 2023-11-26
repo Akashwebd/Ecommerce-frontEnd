@@ -68,3 +68,29 @@ export const create_update_Rating = async(id,token,star) =>{
 export const relatedProduct = async(id) => {
     return await axios.get(`${process.env.REACT_APP_API_END_POINT}/product/related/${id}`);
 }
+
+////////////////////////////// wishlist ////////////////////////////////////
+
+export const createWishlist = async (id,token) =>{
+    return await axios.post(`${process.env.REACT_APP_API_END_POINT}/user/wishlist`,{id},{       
+        headers:{
+            token:token
+        }
+    })   
+}
+
+export const getAllWishlist = async(token) => {
+    return await axios.get(`${process.env.REACT_APP_API_END_POINT}/user/wishlist`,{       
+        headers:{
+            token:token
+        }
+    })  
+}
+
+export const deleteWishList =async(id,token) =>{
+    return await axios.put(`${process.env.REACT_APP_API_END_POINT}/user/wishlist/${id}`,{},{       
+        headers:{
+            token:token
+        }
+    })  
+}

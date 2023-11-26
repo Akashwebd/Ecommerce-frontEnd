@@ -34,6 +34,7 @@ import CartDrawer from './Components/Cart/CartDrawer';
 import CheckOut from './Components/Cart/Checkout';
 import CreateCoupon from './Components/Admin/CreateCoupon';
 import Payment from './Components/Payment';
+import Wishlist from './Components/User/Wishlist';
 
 function App() {
 
@@ -80,6 +81,7 @@ function App() {
       <Route exact path='/forgot/password' component={ForgotPassword}/>
       <UserRoute exact path='/user/history' component={History}/>
       <UserRoute exact path='/user/password' component={UpdatePassword}/>
+      <UserRoute exact path='/user/wishlist' component={Wishlist}/>
       <AdminRoute exact path='/admin/dashboard' component={AdminDashboard}/>
       <AdminRoute exact path = '/admin/category' component={Category}/>
       <AdminRoute exact path='/admin/category/:slugs' component={UpdateCategory} />
