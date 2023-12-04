@@ -10,6 +10,7 @@ import 'react-quill/dist/quill.snow.css';
 import { handleCouponState } from "../Store/Slices/CouponSlice";
 import { Input, Space } from 'antd';
 import { changeCod } from "../Store/Slices/CODSlice";
+import { setNavOptions } from "../Store/Slices/HeaderSlice";
 const { Search } = Input;
 
 
@@ -119,7 +120,8 @@ function CheckOut({history}){
 
        //empty cod
        dispatch(changeCod(false));
-
+       history.push('/');
+       dispatch(setNavOptions('home'));
 
      }
     //  history.push('/user/history');
@@ -132,7 +134,7 @@ console.log(address);
  return(
     <div className="container-fluid"> 
     <div className="row">
-        <div className="col-md-6 mt-3">
+        <div className="col-md-6 mt-5">
           <h4>Delivery Address</h4>
           <br/>
           <ReactQuill theme="snow"  onChange={setAddress}/>

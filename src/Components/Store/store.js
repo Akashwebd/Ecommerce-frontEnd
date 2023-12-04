@@ -5,6 +5,7 @@ import CartReducer from './Slices/CartSlice';
 import DrawerReducer from './Slices/DrawerSlice';
 import CouponReducer from './Slices/CouponSlice';
 import CODReducer from './Slices/CODSlice'; 
+import HeaderSlice from './Slices/HeaderSlice';
 
 const Store = configureStore({
     reducer:{
@@ -13,7 +14,8 @@ const Store = configureStore({
         cart:CartReducer,
         drawer:DrawerReducer,
         couponApplied:CouponReducer,
-        cod:CODReducer
+        cod:CODReducer,
+        header:HeaderSlice
     }
 });
 export default Store;

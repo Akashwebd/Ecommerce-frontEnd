@@ -9,6 +9,7 @@ import {Checkbox, Menu,Slider,Radio} from 'antd';
 import { DollarOutlined, DownSquareOutlined, StarOutlined } from "@ant-design/icons";
 import Rating from "../Ratings";
 import { getSubs } from "../../../Functions/Sub";
+import PageLoader from "../../../PageLoader";
 const {SubMenu,ItemGroup} = Menu;
 
 const brands = ["Apple","Microsoft","Lenovo","Samsung","Asus"];
@@ -402,7 +403,7 @@ return(
             <div className="col-md-9 p-2">
                 <h1 className="jumbotron text-center display-4 p-2">Product</h1>
              <div className="row">
-             {loading ? <h1 className="text-danger">Loading....</h1>:
+             {loading ? <PageLoader/>:
              (
                 list.map(product =>(
                <div className="col-md-3">

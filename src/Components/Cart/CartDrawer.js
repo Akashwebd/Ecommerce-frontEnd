@@ -4,6 +4,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { handleDrawer } from "../Store/Slices/DrawerSlice"; 
 import Laptop from '../../Images/laptop.jpg';
 import { Link } from "react-router-dom";
+import { setNavOptions } from "../Store/Slices/HeaderSlice";
 
 function CartDrawer(){
     const {cart:{cart},drawer} = useSelector(state => ({...state}));
@@ -26,6 +27,7 @@ return(
     <button
     onClick={()=>{
         dispatch(handleDrawer(false));
+        dispatch(setNavOptions('cart'));
     }}
     className="btn btn-sm btn-primary btn-raised btn-block"
     >

@@ -60,11 +60,8 @@ function App() {
       }));
      }
     });
-    console.log(unsubscribe,'check');
-    console.log('re-rendered1');
 
     return () => {
-      console.log('unmount');
       unsubscribe();
     }
 
@@ -103,7 +100,7 @@ function App() {
       <Route exact path='/shop' component={Shop}/>
       <Route exact path='/shop/:searchword' component={Shop}/>
       <Route exact path='/cart' component={Cart} />
-      <Route exact path='/checkout' component={CheckOut}/>
+      <UserRoute exact path='/checkout' component={CheckOut}/>
       <UserRoute exact path='/payment' component={Payment}/>
     </Switch>
     </Suspense>
