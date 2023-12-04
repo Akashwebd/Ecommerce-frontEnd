@@ -15,7 +15,7 @@ function ForgotPassword(){
             // e.preventDefault();
             console.log(process.env.REACT_APP_REGISTER_URL);
             const config = {
-             url:'http://localhost:3000/login',
+             url:`${process.env.REACT_APP_API_FORGOT_PASSWORD}`,
              handleCodeInApp: true,
             //  apiKey:'abcd'
             }
