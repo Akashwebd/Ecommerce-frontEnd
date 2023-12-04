@@ -9,7 +9,7 @@ return(
         color="#4fa94d"
         ariaLabel="tail-spin-loading"
         radius="1"
-        wrapperStyle={{justifyContent:'center',transform:'translateY(50%)'}}
+        wrapperStyle={{justifyContent:'center',transform:'translateY(50%)',margin:'auto'}}
         wrapperClass=""
         visible={true}
 />

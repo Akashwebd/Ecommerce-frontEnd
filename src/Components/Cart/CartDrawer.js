@@ -4,6 +4,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { handleDrawer } from "../Store/Slices/DrawerSlice"; 
 import Laptop from '../../Images/laptop.jpg';
 import { Link } from "react-router-dom";
+import { setNavOptions } from "../Store/Slices/HeaderSlice";
 
 function CartDrawer(){
     const {cart:{cart},drawer} = useSelector(state => ({...state}));
@@ -26,6 +27,7 @@ return(
     <button
     onClick={()=>{
         dispatch(handleDrawer(false));
+        dispatch(setNavOptions('cart'));
     }}
     className="btn btn-sm btn-primary btn-raised btn-block"
     >
@@ -41,14 +43,14 @@ return(
                 <>
                 <img src={item.images[0].url} style={style} className="text-center"/>
                 <p className="text-center bg-secondary text-light">
-                 {item.title}*{item.count}   
+                 {item.title} X {item.count}   
                 </p>
                 </>
                 ):(
                     <>
                 <img src={Laptop}/>
                 <p className="text-center bg-secondary text-light">
-                 {item.title}*{item.count}   
+                 {item.title} x {item.count}   
                 </p>
                 </>
                 )

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCart,deleteCart,saveAddress } from "../Functions/Cart";
+import { createCodOrder } from "../Functions/order";
 import { applyCoupon } from "../Functions/Coupon";
 import {useSelector,useDispatch} from 'react-redux';
 import { addToCart } from "../Store/Slices/CartSlice";
@@ -8,12 +9,14 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { handleCouponState } from "../Store/Slices/CouponSlice";
 import { Input, Space } from 'antd';
+import { changeCod } from "../Store/Slices/CODSlice";
+import { setNavOptions } from "../Store/Slices/HeaderSlice";
 const { Search } = Input;
 
 
 function CheckOut({history}){
   const [productDetails,setProductDeatils] = useState({});
-  const {user} = useSelector(state =>({...state}));
+  const {user,cod} = useSelector(state =>({...state}));
   const [coupon,setCoupon] = useState('');
   const [addressStatus,setAddressStatus] = useState(false);
   const [address,setAddress] = useState('');
@@ -95,18 +98,43 @@ function CheckOut({history}){
     </div>
   )
 
-  const handlePlaceOrder = () =>{
+  const handlePlaceOrder = async() =>{
     if(discountedPrice>0){
       dispatch(handleCouponState(true));
     }
-    history.push('/payment');
+    if(cod){
+     const response = await createCodOrder(user.token,cod);
+     if(response.data.ok){
+      toast.success('Ordered Placed Successfully',{
+        position:toast.POSITION.TOP_RIGHT
+       })
+       await deleteCart(user.token);
+       //empty localStorage
+       window.localStorage.removeItem('cart');
+
+       //empty redux
+       dispatch(addToCart({cart:[]}));
+       
+       //empty coupon
+       dispatch(handleCouponState(false));
+
+       //empty cod
+       dispatch(changeCod(false));
+       history.push('/');
+       dispatch(setNavOptions('home'));
+
+     }
+    //  history.push('/user/history');
+    }else{
+      history.push('/payment');
+    }
   }
 
 console.log(address);
  return(
     <div className="container-fluid"> 
     <div className="row">
-        <div className="col-md-6 mt-3">
+        <div className="col-md-6 mt-5">
           <h4>Delivery Address</h4>
           <br/>
           <ReactQuill theme="snow"  onChange={setAddress}/>

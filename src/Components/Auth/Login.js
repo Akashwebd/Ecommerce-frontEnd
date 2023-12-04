@@ -9,6 +9,7 @@ import { loggedIn } from "../Store/Slices/UserSlice";
 import { googleAuthProvider } from "./Firebase";
 import { Link } from "react-router-dom";
 import {createOrUpdateUser} from '../Functions/auth';
+import { LoadingOutlined } from "@ant-design/icons";
 // import 'react-toastify/dist/ReactToastify.css';
 
 function Login({history}){
@@ -18,7 +19,7 @@ function Login({history}){
     const [loading,setLoading] = useState(false);
 
     const dispatch = useDispatch();
-    const {user} = useSelector(state => ({...state}));
+    const {user} = useSelector(state => state.user);
 
     // useEffect(()=>{
     // setEmail(window.localStorage.getItem('emailForRegistration'));   
@@ -46,6 +47,7 @@ function Login({history}){
     }
 
     const handleSubmit =async (e) =>{
+        e.preventDefault();
         try{
             // e.preventDefault();
             setLoading(true);
@@ -56,7 +58,7 @@ function Login({history}){
                 console.log(token,'checktoken');
                 const res = await createOrUpdateUser(token)
                     console.log(res.data,'updateduser');
-                    await dispatch(loggedIn({
+                await dispatch(loggedIn({
                         id:res.data._id,
                         email:res.data.email,
                         name:res.data.name,
@@ -120,12 +122,14 @@ function Login({history}){
       <Button 
         type="primary" 
         shape="round" 
-        icon={<LoginOutlined />} 
+        icon={loading ? null : <LoginOutlined />} 
         block
         onClick={handleSubmit}
+        disabled={password.length < 6}
         className="mb-3 mt-3"
         size='large'>
-        Login With Email/Password
+             {loading ? <LoadingOutlined/>: "Login With Email/Password"}
+             
       </Button>
     </form>
     <Button 

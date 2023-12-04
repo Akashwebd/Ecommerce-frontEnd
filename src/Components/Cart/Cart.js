@@ -1,12 +1,14 @@
 import React from "react";
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import ProductTableItem from "./ProductTableItem";
 import { saveCart } from "../Functions/Cart";
+import { changeCod } from "../Store/Slices/CODSlice";
 
 
 function Cart({history}){
     const {user,cart:{cart}} = useSelector(state => ({...state}));
+    const dispatch = useDispatch();
     // console.log(cart,'checkcart');
 
     const getTotal = () =>{
@@ -44,7 +46,12 @@ function Cart({history}){
 
     }
 
-    const handleCheckout = async (e) =>{
+    const handleCheckout = check => async e =>{
+        if(check){
+            dispatch(changeCod(true));
+        }else{
+            console.log('false')
+        }
         e.preventDefault();
         const response = saveCart({cart},user.token);
         if((await response).data.ok){
@@ -76,9 +83,15 @@ return(
             <hr/>
             {
                 user.token?
-                <button className="btn btn-sm btn-primary mt-2" disabled={!cart.length} onClick={handleCheckout}>
+                <>
+                <button className="btn btn-sm btn-primary mt-2" disabled={!cart.length} onClick={handleCheckout(false)}>
                 Proceed To CheckOut
                 </button>
+                <br/>
+                <button className="btn btn-sm btn-warning mt-2" disabled={!cart.length} onClick={handleCheckout(true)}>
+                 Pay Cash On Delivery
+                </button>
+                </>
                 :
                 <button className="btn btn-sm btn-primary mt-2">
                  <Link to={{

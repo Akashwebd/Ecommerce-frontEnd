@@ -17,6 +17,7 @@ import { useDispatch,useSelector } from "react-redux";
 import {loggedOut} from './Store/Slices/UserSlice';
 import ProductFilter from "./SearchFilter/ProductFilter";
 import { setText } from "./Store/Slices/TextSlice";
+import { setNavOptions } from "./Store/Slices/HeaderSlice";
 const { SubMenu, Item } = Menu;
 
 
@@ -86,13 +87,13 @@ const { SubMenu, Item } = Menu;
 
 function Header(){
     const [current, setCurrent] = useState('home');
-    const {user,cart:{cart}} = useSelector(state => state);
+    const {user,header,cart:{cart}} = useSelector(state => state);
 
     const history=useHistory();
     const dispatch = useDispatch();
 
     const onClick = (e) => {
-      // console.log('click ', e);
+      console.log('click ', e);
       // if(e.key === 'logout'){
       //   auth.signOut();
       //   dispatch(loggedOut({}));
@@ -102,7 +103,8 @@ function Header(){
       if(e.key !== 'shop'){
      dispatch(setText({text:''}));
       }
-      setCurrent(e.key);
+      dispatch(setNavOptions(e.key));
+      // setCurrent(e.key);
     };
 
     const logout = () => {
@@ -112,10 +114,10 @@ function Header(){
     };
   
 
-console.log('cartlength',user,cart);
+    console.log('check112');
     return (
         // <h1>hello</h1>
-    < Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" style={{display:'block'}}>
+    < Menu onClick={onClick} selectedKeys={[header]} mode="horizontal" style={{display:'block'}}>
        <Item key="home" icon={<AppstoreOutlined />}>
        <Link to="/">Home</Link>
       </Item>
@@ -168,7 +170,7 @@ console.log('cartlength',user,cart);
   )}
 
   <span className="float-right p-1">
-    <ProductFilter setCurrent={setCurrent}/>
+    <ProductFilter/>
   </span>
 </Menu>
     );

@@ -16,3 +16,11 @@ export const getOrders = async (token) =>{
                     }
                 })
 }
+
+export const createCodOrder = async(token,cod) =>{
+    return await axios.post(`${process.env.REACT_APP_API_END_POINT}/user/cash-order`,{cod},{
+        headers:{
+            token:token
+        }
+    })
+}

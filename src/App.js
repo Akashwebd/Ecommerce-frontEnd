@@ -1,40 +1,42 @@
 import {Switch,Route} from 'react-router-dom';
-import Home from './Components/Home';
-import Login from './Components/Auth/Login';
-import Register from './Components/Auth/Register';
-import Header from './Components/Header';
 import 'antd/dist/antd.min.css';
-import RegisterComplete from './Components/Auth/RegisterComplete';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { auth } from './Components/Auth/Firebase';
-import { useEffect } from 'react';
+import React,{ useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
+import { auth } from './Components/Auth/Firebase';
 import { loggedIn } from './Components/Store/Slices/UserSlice';
-import ForgotPassword from './Components/Auth/ForgotPassword';
 import {currentUser} from './Components/Functions/auth';
-import UserRoute from './Components/Route/UserRoute';
-import History from './Components/User/History';
-import UpdatePassword from './Components/User/UpdatePassword';
-import AdminDashboard from './Components/Admin/AdminDashboard';
-import AdminRoute from './Components/Route/AdminRoute';
-import Category from './Components/Admin/Category';
-import UpdateCategory from './Components/Admin/UpdateCategory';
-import Sub from './Components/Admin/Sub';
-import UpdateSubCategory from './Components/Admin/UpdateSubCategory';
-import CreateProduct from './Components/Admin/Product/CreateProduct';
-import Product from './Components/Admin/Product/Product';
-import UpdateProduct from './Components/Admin/Product/UpdateProduct';
-import ViewProduct from './Components/Admin/Product/ViewProduct';
-import ViewCategoryProduct from './Components/Admin/Product/Categories/ViewCategoryProduct';
-import ViewSubsProduct from './Components/Admin/Product/SubCategories/ViewSubsProduct';
-import Shop from './Components/Admin/Product/SubCategories/Shop';
-import Cart from './Components/Cart/Cart';
-import CartDrawer from './Components/Cart/CartDrawer';
-import CheckOut from './Components/Cart/Checkout';
-import CreateCoupon from './Components/Admin/CreateCoupon';
-import Payment from './Components/Payment';
-import Wishlist from './Components/User/Wishlist';
+import {LoadingOutlined } from '@ant-design/icons';
+
+const Home = lazy(()=>import('./Components/Home'));
+const Login = lazy(()=>import('./Components/Auth/Login'));
+const Register = lazy(()=>import('./Components/Auth/Register'));
+const Header = lazy(()=>import('./Components/Header'));
+const RegisterComplete = lazy(()=>import('./Components/Auth/RegisterComplete'));
+const ForgotPassword = lazy(()=>import('./Components/Auth/ForgotPassword'));
+const UserRoute = lazy(()=>import('./Components/Route/UserRoute'));
+const History = lazy(()=>import('./Components/User/History'));
+const UpdatePassword = lazy(()=>import('./Components/User/UpdatePassword'));
+const AdminDashboard = lazy(()=>import('./Components/Admin/AdminDashboard'));
+const AdminRoute = lazy(()=>import('./Components/Route/AdminRoute'));
+const Category = lazy(()=>import('./Components/Admin/Category'));
+const UpdateCategory = lazy(()=>import('./Components/Admin/UpdateCategory'));
+const Sub = lazy(()=>import('./Components/Admin/Sub'));
+const UpdateSubCategory = lazy(()=>import('./Components/Admin/UpdateSubCategory'));
+const CreateProduct = lazy(()=>import('./Components/Admin/Product/CreateProduct'));
+const Product = lazy(()=>import('./Components/Admin/Product/Product'));
+const UpdateProduct = lazy(()=>import('./Components/Admin/Product/UpdateProduct'));
+const ViewProduct = lazy(()=>import('./Components/Admin/Product/ViewProduct'));
+const ViewCategoryProduct = lazy(()=>import('./Components/Admin/Product/Categories/ViewCategoryProduct'));
+const ViewSubsProduct = lazy(()=>import('./Components/Admin/Product/SubCategories/ViewSubsProduct'));
+const Shop = lazy(()=>import('./Components/Admin/Product/SubCategories/Shop'));
+const Cart = lazy(()=>import('./Components/Cart/Cart'));
+const CartDrawer = lazy(()=>import('./Components/Cart/CartDrawer'));
+const CheckOut = lazy(()=>import('./Components/Cart/Checkout'));
+const CreateCoupon = lazy(()=>import('./Components/Admin/CreateCoupon'));
+const Payment = lazy(()=>import('./Components/Payment'));
+const Wishlist = lazy(()=>import('./Components/User/Wishlist'));
 
 function App() {
 
@@ -58,18 +60,19 @@ function App() {
       }));
      }
     });
-    console.log(unsubscribe,'check');
-    console.log('re-rendered1');
 
     return () => {
-      console.log('unmount');
       unsubscribe();
     }
 
   },[])
 
   return (
-    <>
+    <Suspense fallback={
+      <div className='col text-center p-5'>
+        __EC<LoadingOutlined/>MMERCE__
+      </div>
+    }>
     <Header/>
     <CartDrawer/>
     <ToastContainer/>
@@ -97,10 +100,10 @@ function App() {
       <Route exact path='/shop' component={Shop}/>
       <Route exact path='/shop/:searchword' component={Shop}/>
       <Route exact path='/cart' component={Cart} />
-      <Route exact path='/checkout' component={CheckOut}/>
+      <UserRoute exact path='/checkout' component={CheckOut}/>
       <UserRoute exact path='/payment' component={Payment}/>
     </Switch>
-    </>
+    </Suspense>
   );
 }
 
