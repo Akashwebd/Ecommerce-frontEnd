@@ -23,7 +23,7 @@ function Register({history}){
             e.preventDefault();
             console.log(process.env.REACT_APP_REGISTER_URL);
             const config = {
-             url:'http://localhost:3000/register/complete',
+             url:`${process.env.REACT_APP_REGISTER_URL}`,
              handleCodeInApp: true,
             //  apiKey:'abcd'
             }
